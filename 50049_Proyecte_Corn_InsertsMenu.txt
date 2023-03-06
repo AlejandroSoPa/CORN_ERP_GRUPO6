@@ -1,0 +1,69 @@
+OBJECT Codeunit 50049 Proyecte_Corn_Inserts
+{
+  OBJECT-PROPERTIES
+  {
+    Date=06/03/23;
+    Time=18:43:57;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+    OnRun=BEGIN
+
+            RegistreMenu.DELETEALL;
+            RegistreMenu.INIT;
+
+            RegistreMenu.Codigo := 1;
+            RegistreMenu.Nombre := 'Consulta taula dïusuaris';
+            CodiArticulo := RegistreMenu.Codigo;
+            NomArticulo := RegistreMenu.Nombre;
+            RegistreMenu.INSERT;
+
+            RegistreMenu.Codigo := 2;
+            RegistreMenu.Nombre := 'Consulta transaccions dïun ususari';
+            CodiArticulo := RegistreMenu.Codigo;
+            NomArticulo := RegistreMenu.Nombre;
+            RegistreMenu.INSERT;
+
+            RegistreMenu.Codigo := 3;
+            RegistreMenu.Nombre := 'P…gina amb tots els usuaris';
+            CodiArticulo := RegistreMenu.Codigo;
+            NomArticulo := RegistreMenu.Nombre;
+            RegistreMenu.INSERT;
+
+            RegistreMenu.Codigo := 4;
+            RegistreMenu.Nombre := 'Estad¡stica del nombre de transaccions per dia';
+            CodiArticulo := RegistreMenu.Codigo;
+            NomArticulo := RegistreMenu.Nombre;
+            RegistreMenu.INSERT;
+
+            RegistreMenu.Codigo := 5;
+            RegistreMenu.Nombre := 'Estad¡stica de la quantitat de transaccions per dia';
+            CodiArticulo := RegistreMenu.Codigo;
+            NomArticulo := RegistreMenu.Nombre;
+            RegistreMenu.INSERT;
+
+            MeuDialeg.OPEN('Menu' +
+            '\Codi 1 - Consulta taula dïusuaris ' +
+            '\Codi 2 - Consulta transaccions dïun ususari ' +
+            '\Codi 3 - P…gina amb tots els usuaris ' +
+            '\Codi 4 - Estad¡stica del nombre de transaccions per dia ' +
+            '\Codi 5 - Estad¡stica de la quantitat de transaccions per dia');
+            SLEEP(7000);
+          END;
+
+  }
+  CODE
+  {
+    VAR
+      RegistreMenu@1106000000 : Record 50048;
+      NomArticulo@1106000002 : Text;
+      CodiArticulo@1106000001 : Integer;
+      MeuDialeg@1106000003 : Dialog;
+
+    BEGIN
+    END.
+  }
+}
+
