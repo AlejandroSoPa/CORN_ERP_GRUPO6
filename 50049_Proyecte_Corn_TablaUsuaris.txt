@@ -1,0 +1,37 @@
+OBJECT Table 50049 Usuaris
+{
+  OBJECT-PROPERTIES
+  {
+    Date=03/03/23;
+    Time=16:32:32;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+  }
+  FIELDS
+  {
+    { 1   ;   ;phone               ;BigInteger     }
+    { 2   ;   ;email               ;Text30         }
+    { 3   ;   ;name                ;Text30         }
+    { 4   ;   ;surname             ;Text30         }
+    { 5   ;   ;wallet              ;Integer        }
+    { 6   ;   ;session_token       ;Text30         }
+    { 7   ;   ;password            ;Text200        }
+  }
+  KEYS
+  {
+    {    ;phone                                   ;Clustered=Yes }
+  }
+  FIELDGROUPS
+  {
+  }
+  CODE
+  {
+
+    BEGIN
+    END.
+  }
+}
+
