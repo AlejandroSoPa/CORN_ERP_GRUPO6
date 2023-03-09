@@ -1,0 +1,41 @@
+OBJECT Table 50050 Transaccions
+{
+  OBJECT-PROPERTIES
+  {
+    Date=07/03/23;
+    Time=19:23:09;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+  }
+  FIELDS
+  {
+    { 1   ;   ;token               ;Text250        }
+    { 2   ;   ;Origen              ;Text30         }
+    { 3   ;   ;Desti               ;Text30         }
+    { 4   ;   ;Quantitat           ;Integer        }
+    { 5   ;   ;Accepted            ;Boolean        }
+    { 6   ;   ;TimeSetup           ;DateTime       }
+    { 7   ;   ;TimeAccept          ;Text30        ;NotBlank=No }
+    { 8   ;   ;Precio_Promedio     ;Integer       ;FieldClass=FlowField;
+                                                   CalcFormula=Average(Transaccions.Quantitat WHERE (TimeSetup=FILTER(01/03/23 00:00..30/03/23 00:00))) }
+    { 9   ;   ;Numero_Promedio     ;Integer       ;FieldClass=FlowField;
+                                                   CalcFormula=Count(Transaccions WHERE (TimeSetup=FILTER(01/03/23 00:00..30/03/23 00:00))) }
+  }
+  KEYS
+  {
+    {    ;token                                   ;Clustered=Yes }
+  }
+  FIELDGROUPS
+  {
+  }
+  CODE
+  {
+
+    BEGIN
+    END.
+  }
+}
+
