@@ -1,0 +1,101 @@
+OBJECT Codeunit 50050 Proyecte_Corn
+{
+  OBJECT-PROPERTIES
+  {
+    Date=09/03/23;
+    Time=16:29:56;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+    OnRun=BEGIN
+            Menu := Window.InputBox('Escoge una opci¢n del 1 al 4: ', 'Menu','Choose an option',100,100);
+
+            CASE Menu OF
+              '1':
+                BEGIN
+                  // Codi 1 - Descripci¢: Consulta taula d'usuaris
+                  MeuDialeg.OPEN('Consulta 1 \Telefon: #1###### \ Email: #2###### \Nom: #3###### \Cognoms: #4###### \Cartera: #5###### \Token: #6###### \Contrasenya: #7######');
+                  WITH RegistreUsuaris DO
+                    BEGIN
+                      IF FIND('-') THEN
+                        REPEAT
+                          MeuDialeg.UPDATE(1,phone);
+                          MeuDialeg.UPDATE(2,email);
+                          MeuDialeg.UPDATE(3,name);
+                          MeuDialeg.UPDATE(4,surname);
+                          MeuDialeg.UPDATE(5,wallet);
+                          MeuDialeg.UPDATE(6,session_token);
+                          MeuDialeg.UPDATE(7,password);
+                          SLEEP(5000);
+                        UNTIL NEXT = 0;
+                    END;
+                  MeuDialeg.CLOSE;
+                END;
+
+              '2':
+                BEGIN
+                  // Codi 2 - Descripci¢: Consulta transaccions d'un ususari
+                  User := Window.InputBox('Inserta el nombre de telefon de l'' usuari', 'Menu', 'Introdueix un nombre', 100, 100);
+                  MeuDialeg.OPEN('Consulta 2 \Origen #1######' + '\Desti #2######' + '\Quantitat #3######' + '\Estat #4######' + '\Timestamp Start #5######' + '\Timestamp Finish #6######');
+                  RegistreTransacciones.SETCURRENTKEY(RegistreTransacciones.Desti);
+                  RegistreTransacciones.SETFILTER(RegistreTransacciones.Desti,User+'..'+User);
+                  WITH RegistreTransacciones DO BEGIN
+                    IF FIND('-') THEN REPEAT
+                      MeuDialeg.UPDATE(1,FORMAT(RegistreTransacciones.Origen));
+                      MeuDialeg.UPDATE(2,RegistreTransacciones.Desti);
+                      MeuDialeg.UPDATE(3,FORMAT(RegistreTransacciones.Quantitat));
+                      MeuDialeg.UPDATE(4,FORMAT(RegistreTransacciones.Accepted));
+                      MeuDialeg.UPDATE(5,FORMAT(RegistreTransacciones.TimeSetup));
+                      MeuDialeg.UPDATE(6,FORMAT(RegistreTransacciones.TimeAccept));
+                      SLEEP(5000);
+                    UNTIL NEXT = 0;
+                  END;
+                  MeuDialeg.CLOSE;
+                END;
+
+              '3':
+                BEGIN
+                  // Codi 4 - Descripci¢: Estad¡stica del nombre de transaccions per dia
+                  WITH RegistreTransacciones DO BEGIN
+                    SETAUTOCALCFIELDS(Numero_Promedio);
+                    IF FIND('-') THEN
+                      MeuDialeg.OPEN('Consulta 4 \Nombre de transaccions per dia: #1######');
+                      MeuDialeg.UPDATE(1,FORMAT(Numero_Promedio));
+                      SLEEP(5000);
+                    END;
+                    MeuDialeg.CLOSE;
+                END;
+
+              '4':
+                BEGIN
+                  // Codi 5 - Descripci¢: Estad¡stica de la quantitat de transaccions per dia
+                  WITH RegistreTransacciones DO BEGIN
+                    SETAUTOCALCFIELDS(Precio_Promedio);
+                    IF FIND('-') THEN
+                      MeuDialeg.OPEN('Consulta 5 \Quantitat de transaccions per dia: #1######');
+                      MeuDialeg.UPDATE(1,FORMAT(Precio_Promedio));
+                      SLEEP(5000);
+                    END;
+                    MeuDialeg.CLOSE;
+                END;
+            END;
+          END;
+
+  }
+  CODE
+  {
+    VAR
+      RegistreUsuaris@1106000000 : Record 50049;
+      RegistreTransacciones@1106000001 : Record 50050;
+      Menu@1106000002 : Text;
+      Window@1106000003 : DotNet "'Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.Microsoft.VisualBasic.Interaction" RUNONCLIENT;
+      MeuDialeg@1106000004 : Dialog;
+      User@1106000005 : Text;
+
+    BEGIN
+    END.
+  }
+}
+
