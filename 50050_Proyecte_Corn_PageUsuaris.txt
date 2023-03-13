@@ -1,0 +1,59 @@
+OBJECT Page 50050 ProyectoCorn_PageUsuaris
+{
+  OBJECT-PROPERTIES
+  {
+    Date=09/03/23;
+    Time=15:47:28;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+    SourceTable=Table50049;
+    PageType=List;
+    ActionList=ACTIONS
+    {
+      { 1106000009;  ;ActionContainer;
+                      Name=Nous documents;
+                      ActionContainerType=ActionItems }
+      { 1106000007;1 ;ActionGroup;
+                      Name=Llista }
+      { 1106000008;2 ;Action    ;
+                      Name=Transaccions;
+                      RunObject=Page 50049;
+                      RunPageLink=Desti=FIELD(phone) }
+    }
+  }
+  CONTROLS
+  {
+    { 1106000000;0;Container;
+                ContainerType=ContentArea }
+
+    { 1106000001;1;Group  ;
+                Name=Group;
+                GroupType=Repeater }
+
+    { 1106000002;2;Field  ;
+                SourceExpr=phone }
+
+    { 1106000003;2;Field  ;
+                SourceExpr=name }
+
+    { 1106000004;2;Field  ;
+                SourceExpr=surname }
+
+    { 1106000005;2;Field  ;
+                SourceExpr=email }
+
+    { 1106000006;2;Field  ;
+                SourceExpr=wallet }
+
+  }
+  CODE
+  {
+
+    BEGIN
+    END.
+  }
+}
+

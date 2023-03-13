@@ -1,0 +1,37 @@
+OBJECT Table 50050 Transaccions
+{
+  OBJECT-PROPERTIES
+  {
+    Date=10/03/23;
+    Time=17:58:36;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+  }
+  FIELDS
+  {
+    { 1   ;   ;token               ;Text250        }
+    { 2   ;   ;Origen              ;Text30         }
+    { 3   ;   ;Desti               ;Text30         }
+    { 4   ;   ;Quantitat           ;Integer        }
+    { 5   ;   ;Accepted            ;Boolean        }
+    { 6   ;   ;TimeSetup           ;DateTime       }
+    { 7   ;   ;TimeAccept          ;Text30        ;NotBlank=No }
+  }
+  KEYS
+  {
+    {    ;token                                   ;Clustered=Yes }
+  }
+  FIELDGROUPS
+  {
+  }
+  CODE
+  {
+
+    BEGIN
+    END.
+  }
+}
+

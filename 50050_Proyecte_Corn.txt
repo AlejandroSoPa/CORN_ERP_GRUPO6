@@ -2,15 +2,15 @@ OBJECT Codeunit 50050 Proyecte_Corn
 {
   OBJECT-PROPERTIES
   {
-    Date=06/03/23;
-    Time=18:05:47;
+    Date=10/03/23;
+    Time=17:58:56;
     Modified=Yes;
     Version List=;
   }
   PROPERTIES
   {
     OnRun=BEGIN
-            Menu := Window.InputBox('Escoge una opci¢n del 1 al 2: ', 'Menu','Choose an option',100,100);
+            Menu := Window.InputBox('Escoge una opci¢n del 1 al 4: ', 'Menu','Choose an option',100,100);
 
             CASE Menu OF
               '1':
@@ -38,8 +38,7 @@ OBJECT Codeunit 50050 Proyecte_Corn
                 BEGIN
                   // Codi 2 - Descripci¢: Consulta transaccions d'un ususari
                   User := Window.InputBox('Inserta el nombre de telefon de l'' usuari', 'Menu', 'Introdueix un nombre', 100, 100);
-                  MeuDialeg.OPEN('Origen #1######' + '\Desti #2######' + '\Quantitat #3######' + '\Estat #4######' + '\Timestamp Start #5######' + '\Timestamp Finish #6######');
-
+                  MeuDialeg.OPEN('Consulta 2 \Origen #1######' + '\Desti #2######' + '\Quantitat #3######' + '\Estat #4######' + '\Timestamp Start #5######' + '\Timestamp Finish #6######');
                   RegistreTransacciones.SETCURRENTKEY(RegistreTransacciones.Desti);
                   RegistreTransacciones.SETFILTER(RegistreTransacciones.Desti,User+'..'+User);
                   WITH RegistreTransacciones DO BEGIN
@@ -53,9 +52,67 @@ OBJECT Codeunit 50050 Proyecte_Corn
                       SLEEP(5000);
                     UNTIL NEXT = 0;
                   END;
-
                   MeuDialeg.CLOSE;
-                  SLEEP(100);
+                END;
+
+              '3':
+                BEGIN
+                // Codi 4 - Descripci¢: Estad¡stica del nombre de transaccions per dia
+                  dialogText := 'Dia: #1###### \Nombre de transaccions: #2######';
+                  MeuDialeg.OPEN(dialogText);
+                  WITH RegistreTransacciones DO BEGIN
+                    day := 0D;
+                    totalTransactions := 0;
+                    SETCURRENTKEY(TimeSetup);
+                    ASCENDING(TRUE);
+                    IF FIND('-') THEN REPEAT
+                      IF DT2DATE(TimeSetup) = day THEN BEGIN
+                        totalTransactions += 1;
+                      END ELSE BEGIN
+                        IF day <> 0D THEN BEGIN
+                          MeuDialeg.UPDATE(1,FORMAT(day));;
+                          MeuDialeg.UPDATE(2,FORMAT(totalTransactions));
+                          SLEEP(3000);
+                        END;
+                        day := DT2DATE(TimeSetup);
+                        totalTransactions := 1;
+                      END;
+                    UNTIL NEXT = 0;
+                    day := DT2DATE(TimeSetup);
+                    MeuDialeg.UPDATE(1,FORMAT(day));
+                    MeuDialeg.UPDATE(2,FORMAT(totalTransactions));
+                    SLEEP(3000);
+                  END;
+                END;
+
+              '4':
+                BEGIN
+                // Codi 5 - Descripci¢: Estad¡stica de la quantitat de transaccions per dia
+                  dialogText := 'Dia: #1###### \Total de diners: #3######';
+                  MeuDialeg.OPEN(dialogText);
+                  WITH RegistreTransacciones DO BEGIN
+                    day := 0D;
+                    totalAmount := 0;
+                    SETCURRENTKEY(TimeSetup);
+                    ASCENDING(TRUE);
+                    IF FIND('-') THEN REPEAT
+                      IF DT2DATE(TimeSetup) = day THEN BEGIN
+                        totalAmount += Quantitat;
+                      END ELSE BEGIN
+                        IF day <> 0D THEN BEGIN
+                          MeuDialeg.UPDATE(1,FORMAT(day));;
+                          MeuDialeg.UPDATE(3,FORMAT(totalAmount));
+                          SLEEP(3000);
+                        END;
+                        day := DT2DATE(TimeSetup);
+                        totalAmount := Quantitat;
+                      END;
+                    UNTIL NEXT = 0;
+                    day := DT2DATE(TimeSetup);
+                    MeuDialeg.UPDATE(1,FORMAT(day));
+                    MeuDialeg.UPDATE(3,FORMAT(totalAmount));
+                    SLEEP(3000);
+                  END;
                 END;
             END;
           END;
@@ -70,6 +127,10 @@ OBJECT Codeunit 50050 Proyecte_Corn
       Window@1106000003 : DotNet "'Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.Microsoft.VisualBasic.Interaction" RUNONCLIENT;
       MeuDialeg@1106000004 : Dialog;
       User@1106000005 : Text;
+      day@1106000006 : Date;
+      totalAmount@1106000007 : Decimal;
+      totalTransactions@1106000008 : Integer;
+      dialogText@1106000009 : Text;
 
     BEGIN
     END.
