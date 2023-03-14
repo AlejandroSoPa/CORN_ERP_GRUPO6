@@ -1,0 +1,50 @@
+OBJECT Page 50049 ProyectoCorn_PageTransaccions
+{
+  OBJECT-PROPERTIES
+  {
+    Date=09/03/23;
+    Time=16:06:33;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+    SourceTable=Table50050;
+    PageType=List;
+  }
+  CONTROLS
+  {
+    { 1106000000;0;Container;
+                ContainerType=ContentArea }
+
+    { 1106000001;1;Group  ;
+                Name=Group;
+                GroupType=Repeater }
+
+    { 1106000002;2;Field  ;
+                SourceExpr=Desti }
+
+    { 1106000003;2;Field  ;
+                SourceExpr=Origen }
+
+    { 1106000004;2;Field  ;
+                SourceExpr=Quantitat }
+
+    { 1106000005;2;Field  ;
+                SourceExpr=Accepted }
+
+    { 1106000006;2;Field  ;
+                SourceExpr=TimeSetup }
+
+    { 1106000007;2;Field  ;
+                SourceExpr=TimeAccept }
+
+  }
+  CODE
+  {
+
+    BEGIN
+    END.
+  }
+}
+
